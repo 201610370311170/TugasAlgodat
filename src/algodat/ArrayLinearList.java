@@ -1,9 +1,9 @@
 package algodat;
 
-public class ArrayLinearList implements LinearList {
+public class ArrayLinearList implements LinearList, Cloneable {
         
     
-    protected Object[] element , element2;    
+    protected Object[] element , element2 ;    
     protected int size; 
     
     //element.length ------ >>>>> UKURAN ARRAY 
@@ -148,23 +148,61 @@ public class ArrayLinearList implements LinearList {
                     
     } 
      
+    public Object[] clone(){ 
+      
+        Object[] element2 = element; 
+        
+        for(int i = 0 ; i < element.length ; i++){
+           System.out.print(element2[i] + " ");
+        }  
+        return element2;
+    }   
+    
+    
+    public void removeRange(int awalIndex, int akhirIndex){
+        
+        checkIndex(awalIndex);
+        checkIndex(akhirIndex);
+        
+        for(int i = awalIndex ; i <= akhirIndex ; i++ ){
+            element[i] = null;
+        }
+    }
      
      
      
-    public static void main(String[] args) {
+    public static void main(String[] args) throws CloneNotSupportedException {
          ArrayLinearList a = new ArrayLinearList(5); // contructor dengan initial capacity 5
         //nambahin isi ke dalam masing2 index 
         a.add(0, 1);
         a.add(1, 2);
-       
         a.add(2, 4);
         a.add(3, 8);
+        a.add(4, 5);
+        
         System.out.print("Isi Array : [ ");
         for(int i = 0 ; i < a.size ; i++){
             System.out.print(a.element[i]+" ");
         }
+        
         System.out.print("]");
         System.out.println("");
+        
+        System.out.println("Remove element from index 1 - index 3 ");
+        a.removeRange(1, 3);
+        System.out.println("Isi array setelah d remove element ");
+        
+        System.out.print("Isi Array : [ ");
+        for(int i = 0 ; i < a.size ; i++){
+            System.out.print(a.element[i]+" ");
+        }
+        
+        System.out.print("]");
+        
+        //clone
+        System.out.println("");
+        System.out.println(a.clone());
+        
         System.out.println("Ukuran awal Array adalah : " +a.element.length);
         System.out.println("Array yang terisi : "+a.size());
         
@@ -175,10 +213,9 @@ public class ArrayLinearList implements LinearList {
         
         //to String 
         System.out.println("Array dalam bentuk String : "+a.toString());
-        System.out.println("Ukuran setelah setSize Array adalah : " +a.element.length);
+        
         
         //trimToSize
-       
         System.out.println("sebelum dipotong "+a.element.length);
         a.trimToSize();
         System.out.println("setelah dipotong "+a.element2.length);
